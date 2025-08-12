@@ -4,8 +4,9 @@ import { scoreMatch, getSharedItems } from '@/lib/match';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { otherId: string } }
+  { params }: { params: Promise<{ otherId: string }> }
 ) {
+  const { otherId } = await params;
   try {
     // Get the current user
     const { data: { user }, error: authError } = await supabase.auth.getUser();
@@ -15,7 +16,7 @@ export async function GET(
     }
 
     const myId = user.id;
-    const otherId = params.otherId;
+    // otherId is already extracted from params above
 
     // Get both user profiles
     const { data: profiles, error: profilesError } = await supabase

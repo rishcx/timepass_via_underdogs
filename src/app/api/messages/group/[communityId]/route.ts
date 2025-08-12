@@ -4,8 +4,9 @@ import { Message } from '@/types';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { communityId: string } }
+  { params }: { params: Promise<{ communityId: string }> }
 ) {
+  const { communityId } = await params;
   try {
     const supabase = createSupabaseServerClient();
     const { searchParams } = new URL(request.url);
@@ -23,7 +24,7 @@ export async function GET(
       .from('community_members')
       .select('*')
       .eq('user_id', user.id)
-      .eq('community_id', params.communityId)
+      .eq('community_id', communityId)
       .single();
 
     if (!membership) {
@@ -35,7 +36,7 @@ export async function GET(
       .from('messages')
       .select('*')
       .eq('kind', 'group')
-      .eq('community_id', params.communityId)
+      .eq('community_id', communityId)
       .order('created_at', { ascending: true })
       .range(offset, offset + limit - 1);
 

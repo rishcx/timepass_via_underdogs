@@ -4,8 +4,9 @@ import { Message } from '@/types';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { otherId: string } }
+  { params }: { params: Promise<{ otherId: string }> }
 ) {
+  const { otherId } = await params;
   try {
     const supabase = createSupabaseServerClient();
     const { searchParams } = new URL(request.url);
@@ -22,7 +23,7 @@ export async function GET(
     const { data: connection } = await supabase
       .from('connections')
       .select('*')
-      .or(`and(requester_id.eq.${user.id},target_id.eq.${params.otherId}),and(requester_id.eq.${params.otherId},target_id.eq.${user.id})`)
+      .or(`and(requester_id.eq.${user.id},target_id.eq.${otherId}),and(requester_id.eq.${otherId},target_id.eq.${user.id})`)
       .eq('status', 'accepted')
       .single();
 
@@ -35,7 +36,7 @@ export async function GET(
       .from('messages')
       .select('*')
       .eq('kind', 'dm')
-      .or(`and(author_id.eq.${user.id},recipient_id.eq.${params.otherId}),and(author_id.eq.${params.otherId},recipient_id.eq.${user.id})`)
+      .or(`and(author_id.eq.${user.id},recipient_id.eq.${otherId}),and(author_id.eq.${otherId},recipient_id.eq.${user.id})`)
       .order('created_at', { ascending: true })
       .range(offset, offset + limit - 1);
 

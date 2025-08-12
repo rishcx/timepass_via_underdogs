@@ -170,7 +170,7 @@ export default function ChatWithUserPage() {
             ) : (
               <div className="space-y-4">
                 {messages.map((message) => {
-                  const isOwnMessage = message.author_id === 'current-user-id';
+                  const isOwnMessage = message.author === 'current-user-id';
                   return (
                     <div key={message.id} className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'}`}>
                       <div className={`flex items-start space-x-3 max-w-xs lg:max-w-md ${isOwnMessage ? 'flex-row-reverse space-x-reverse' : ''}`}>

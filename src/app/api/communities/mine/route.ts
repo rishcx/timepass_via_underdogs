@@ -26,10 +26,10 @@ export async function GET(_request: NextRequest) {
     }
 
     // Extract communities from memberships
-    const communities = memberships.map(membership => membership.community);
+    const communities = memberships.map(membership => membership.community).filter(Boolean);
 
     return NextResponse.json({ 
-      communities: communities as Community[] 
+      communities: communities as unknown as Community[] 
     });
 
   } catch (error) {

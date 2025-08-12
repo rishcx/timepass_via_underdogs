@@ -172,7 +172,7 @@ export default function DiscoverClient({ data }: DiscoverClientProps) {
                         {match.top_artists.slice(0, 5).map((artist) => (
                           <div key={artist.id} className="text-center">
                             <img
-                              src={artist.images[0]?.url || '/placeholder-artist.png'}
+                              src={artist.images?.[0]?.url || '/placeholder-artist.png'}
                               alt={artist.name}
                               className="w-12 h-12 rounded-full object-cover"
                             />

@@ -1,5 +1,6 @@
 import { createSupabaseBrowserClient } from './client';
 import { Message } from '@/types';
+import type { RealtimeChannel } from '@supabase/supabase-js';
 
 export function subscribeToDMMessages(otherUserId: string, onMessage: (message: Message) => void) {
   const supabase = createSupabaseBrowserClient();
@@ -39,7 +40,7 @@ export function subscribeToGroupMessages(communityId: string, onMessage: (messag
     .subscribe();
 }
 
-export function unsubscribeFromChannel(channel: ReturnType<typeof createSupabaseBrowserClient>['channel']) {
+export function unsubscribeFromChannel(channel: RealtimeChannel | null) {
   if (channel) {
     channel.unsubscribe();
   }

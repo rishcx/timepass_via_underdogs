@@ -35,9 +35,9 @@ export async function GET(_request: NextRequest) {
 
 function constructAuthorizeUrl(state: string): string {
   const params = new URLSearchParams({
-    client_id: SPOTIFY_CLIENT_ID,
+    client_id: SPOTIFY_CLIENT_ID!,
     response_type: 'code',
-    redirect_uri: SPOTIFY_REDIRECT_URI,
+    redirect_uri: SPOTIFY_REDIRECT_URI!,
     scope: 'user-top-read user-read-recently-played playlist-modify-private user-read-private user-read-email',
     state: state,
   });

@@ -157,7 +157,7 @@ export default function CommunityPage() {
                     <div className="flex-shrink-0">
                       <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
                         <span className="text-sm font-medium text-gray-600">
-                          {message.author_id.charAt(0).toUpperCase()}
+                          {message.author.charAt(0).toUpperCase()}
                         </span>
                       </div>
                     </div>
