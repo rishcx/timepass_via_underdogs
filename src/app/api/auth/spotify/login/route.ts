@@ -8,7 +8,7 @@ if (!SPOTIFY_CLIENT_ID || !SPOTIFY_REDIRECT_URI) {
   throw new Error('Missing Spotify environment variables');
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // Generate a random state parameter for CSRF protection
     const state = crypto.randomBytes(32).toString('hex');

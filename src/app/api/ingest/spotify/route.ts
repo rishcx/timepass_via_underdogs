@@ -2,7 +2,26 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabaseClient';
 import { spotifyApiCall } from '@/lib/spotify';
 
-export async function POST(request: NextRequest) {
+interface SpotifyTrack {
+  id: string;
+  name: string;
+  artists: Array<{ id: string; name: string }>;
+}
+
+interface SpotifyArtist {
+  id: string;
+  name: string;
+  genres: string[];
+}
+
+interface AudioFeature {
+  danceability: number;
+  energy: number;
+  valence: number;
+  tempo: number;
+}
+
+export async function POST(_request: NextRequest) {
   try {
     // Get the current user
     const { data: { user }, error: authError } = await supabase.auth.getUser();
@@ -20,20 +39,20 @@ export async function POST(request: NextRequest) {
     const topTracks = await spotifyApiCall(userId, '/me/top/tracks?time_range=medium_term&limit=25');
     
     // Get audio features for top tracks
-    const trackIds = topTracks.items.map((track: any) => track.id).join(',');
+    const trackIds = topTracks.items.map((track: SpotifyTrack) => track.id).join(',');
     const audioFeatures = await spotifyApiCall(userId, `/audio-features?ids=${trackIds}`);
     
     // Calculate average audio features
-    const validFeatures = audioFeatures.audio_features.filter((feature: any) => feature !== null);
+    const validFeatures = audioFeatures.audio_features.filter((feature: AudioFeature | null) => feature !== null) as AudioFeature[];
     const audioFeatureAvg = validFeatures.length > 0 ? {
-      danceability: validFeatures.reduce((sum: number, f: any) => sum + f.danceability, 0) / validFeatures.length,
-      energy: validFeatures.reduce((sum: number, f: any) => sum + f.energy, 0) / validFeatures.length,
-      valence: validFeatures.reduce((sum: number, f: any) => sum + f.valence, 0) / validFeatures.length,
-      tempo: validFeatures.reduce((sum: number, f: any) => sum + f.tempo, 0) / validFeatures.length,
+      danceability: validFeatures.reduce((sum: number, f: AudioFeature) => sum + f.danceability, 0) / validFeatures.length,
+      energy: validFeatures.reduce((sum: number, f: AudioFeature) => sum + f.energy, 0) / validFeatures.length,
+      valence: validFeatures.reduce((sum: number, f: AudioFeature) => sum + f.valence, 0) / validFeatures.length,
+      tempo: validFeatures.reduce((sum: number, f: AudioFeature) => sum + f.tempo, 0) / validFeatures.length,
     } : null;
 
     // Extract and count genres
-    const allGenres = topArtists.items.flatMap((artist: any) => artist.genres);
+    const allGenres = topArtists.items.flatMap((artist: SpotifyArtist) => artist.genres);
     const genreCounts: { [key: string]: number } = {};
     allGenres.forEach((genre: string) => {
       genreCounts[genre] = (genreCounts[genre] || 0) + 1;

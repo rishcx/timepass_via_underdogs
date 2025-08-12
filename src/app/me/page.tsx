@@ -4,14 +4,36 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 
+interface SpotifyArtist {
+  id: string;
+  name: string;
+  images?: Array<{ url: string }>;
+}
+
+interface SpotifyTrack {
+  id: string;
+  name: string;
+  artists: Array<{ id: string; name: string }>;
+  album: {
+    images?: Array<{ url: string }>;
+  };
+}
+
+interface AudioFeatures {
+  danceability: number;
+  energy: number;
+  valence: number;
+  tempo: number;
+}
+
 interface UserProfile {
   id: string;
   display_name: string;
   email: string;
-  top_artists?: any[];
-  top_tracks?: any[];
+  top_artists?: SpotifyArtist[];
+  top_tracks?: SpotifyTrack[];
   genres?: string[];
-  audio_feature_avg?: any;
+  audio_feature_avg?: AudioFeatures;
   last_taste_update?: string;
 }
 
@@ -173,7 +195,7 @@ export default function MePage() {
                     />
                     <div className="flex-1">
                       <p className="font-medium text-gray-900">{track.name}</p>
-                      <p className="text-sm text-gray-600">{track.artists.map((a: any) => a.name).join(', ')}</p>
+                      <p className="text-sm text-gray-600">{track.artists.map((a) => a.name).join(', ')}</p>
                     </div>
                   </div>
                 ))}

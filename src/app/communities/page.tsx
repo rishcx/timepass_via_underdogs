@@ -128,7 +128,7 @@ export default function CommunitiesPage() {
 
         {/* Communities Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {communities.map((community: any) => (
+          {communities.map((community: Community & { member_count?: number }) => (
             <div key={community.id} className="bg-white rounded-lg shadow-sm p-6">
               <div className="flex items-center justify-between mb-4">
                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${

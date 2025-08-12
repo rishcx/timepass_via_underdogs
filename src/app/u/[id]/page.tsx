@@ -4,20 +4,42 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 
+interface SpotifyArtist {
+  id: string;
+  name: string;
+  images?: Array<{ url: string }>;
+}
+
+interface SpotifyTrack {
+  id: string;
+  name: string;
+  artists: Array<{ id: string; name: string }>;
+  album: {
+    images?: Array<{ url: string }>;
+  };
+}
+
+interface AudioFeatures {
+  danceability: number;
+  energy: number;
+  valence: number;
+  tempo: number;
+}
+
 interface UserProfile {
   id: string;
   display_name: string;
   email: string;
-  top_artists?: any[];
-  top_tracks?: any[];
+  top_artists?: SpotifyArtist[];
+  top_tracks?: SpotifyTrack[];
   genres?: string[];
-  audio_feature_avg?: any;
+  audio_feature_avg?: AudioFeatures;
 }
 
 interface MatchData {
   score: number;
-  shared_artists: any[];
-  shared_tracks: any[];
+  shared_artists: SpotifyArtist[];
+  shared_tracks: SpotifyTrack[];
   shared_genres: string[];
   other_user: {
     id: string;
@@ -169,7 +191,7 @@ export default function UserProfilePage() {
                     />
                     <div>
                       <p className="text-sm font-medium text-green-700">{track.name}</p>
-                      <p className="text-xs text-green-600">{track.artists.map((a: any) => a.name).join(', ')}</p>
+                      <p className="text-xs text-green-600">{track.artists.map((a) => a.name).join(', ')}</p>
                     </div>
                   </div>
                 ))}

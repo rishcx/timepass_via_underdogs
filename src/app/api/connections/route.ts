@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { Connection, PopulatedConnection } from '@/types';
+import { Connection, PopulatedConnection, UserSummary } from '@/types';
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     const supabase = createSupabaseServerClient();
 
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     const pending: PopulatedConnection[] = [];
     const accepted: PopulatedConnection[] = [];
 
-    connections.forEach((conn: any) => {
+    connections.forEach((conn: Connection & { requester: UserSummary; target: UserSummary }) => {
       const isRequester = conn.requester_id === user.id;
       const otherUser = isRequester ? conn.target : conn.requester;
       

@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
     const userData = await userResponse.json();
 
     // Store user data in Supabase
-    const { data: authUser, error: authError } = await supabase.auth.signInWithOAuth({
+    const { error: authError } = await supabase.auth.signInWithOAuth({
       provider: 'spotify',
       options: {
         queryParams: {

@@ -8,7 +8,7 @@ function toTitleCase(str: string): string {
   );
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     // Only allow in development
     if (process.env.NODE_ENV !== 'development') {

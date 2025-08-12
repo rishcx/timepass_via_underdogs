@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabaseClient';
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [_user, setUser] = useState<{ id: string; email?: string } | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-green-50 p-6 rounded-lg border border-green-200">
               <h3 className="text-lg font-semibold text-green-800 mb-2">Your Music Taste</h3>
-              <p className="text-green-600">We're analyzing your Spotify listening patterns to understand your musical preferences.</p>
+              <p className="text-green-600">We&apos;re analyzing your Spotify listening patterns to understand your musical preferences.</p>
             </div>
             
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
@@ -69,7 +69,7 @@ export default function DashboardPage() {
           
           <div className="mt-8 text-center">
             <p className="text-gray-600">
-              Your profile is being set up. You'll be able to start matching soon!
+              Your profile is being set up. You&apos;ll be able to start matching soon!
             </p>
           </div>
         </div>

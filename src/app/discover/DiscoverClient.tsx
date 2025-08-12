@@ -2,14 +2,33 @@
 
 import { useRouter } from 'next/navigation';
 
+interface SpotifyArtist {
+  id: string;
+  name: string;
+  images?: Array<{ url: string }>;
+}
+
+interface SpotifyTrack {
+  id: string;
+  name: string;
+  artists: Array<{ id: string; name: string }>;
+}
+
+interface AudioFeatures {
+  danceability: number;
+  energy: number;
+  valence: number;
+  tempo: number;
+}
+
 interface UserProfile {
   id: string;
   display_name: string;
   email: string;
-  top_artists?: any[];
-  top_tracks?: any[];
+  top_artists?: SpotifyArtist[];
+  top_tracks?: SpotifyTrack[];
   genres?: string[];
-  audio_feature_avg?: any;
+  audio_feature_avg?: AudioFeatures;
   score?: number;
 }
 
@@ -32,7 +51,7 @@ export default function DiscoverClient({ data }: DiscoverClientProps) {
     return 'text-red-600 bg-red-100';
   };
 
-  const handleConnect = (userId: string) => {
+  const handleConnect = (_userId: string) => {
     alert('Connect feature coming soon!');
   };
 

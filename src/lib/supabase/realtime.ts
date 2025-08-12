@@ -39,7 +39,7 @@ export function subscribeToGroupMessages(communityId: string, onMessage: (messag
     .subscribe();
 }
 
-export function unsubscribeFromChannel(channel: any) {
+export function unsubscribeFromChannel(channel: ReturnType<typeof createSupabaseBrowserClient>['channel']) {
   if (channel) {
     channel.unsubscribe();
   }

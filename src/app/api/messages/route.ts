@@ -81,7 +81,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'community_id is required for group messages' }, { status: 400 });
     }
 
-    const messageData: any = {
+    const messageData: {
+      kind: string;
+      body: string;
+      author_id: string;
+      community_id?: string;
+      recipient_id?: string;
+    } = {
       kind,
       body,
       author_id: user.id

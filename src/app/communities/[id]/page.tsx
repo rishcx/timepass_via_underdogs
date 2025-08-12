@@ -15,7 +15,7 @@ export default function CommunityPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
-  const [channel, setChannel] = useState<any>(null);
+  const [channel, setChannel] = useState<ReturnType<typeof subscribeToGroupMessages> | null>(null);
 
   useEffect(() => {
     fetchCommunity();
