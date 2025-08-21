@@ -3,7 +3,10 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
+import { UserProfile } from '@/types/spotify';
 
+
+<<<<<<< HEAD
 interface SpotifyArtist {
   id: string;
   name: string;
@@ -36,6 +39,8 @@ interface UserProfile {
   audio_feature_avg?: AudioFeatures;
   last_taste_update?: string;
 }
+=======
+>>>>>>> 1624f92 (api done)
 
 export default function MePage() {
   const router = useRouter();
@@ -149,7 +154,7 @@ export default function MePage() {
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Top Genres</h2>
               <div className="flex flex-wrap gap-2">
-                {profile.genres.map((genre, index) => (
+                {profile.genres.map((genre) => (
                   <span
                     key={genre}
                     className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium"

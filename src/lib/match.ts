@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 interface SpotifyArtist {
   id: string;
   name: string;
@@ -29,6 +30,9 @@ interface UserProfile {
   genres?: string[];
   audio_feature_avg?: AudioFeatures;
 }
+=======
+import { UserProfile, SpotifyArtist, SpotifyTrack } from '@/types/spotify';
+>>>>>>> 1624f92 (api done)
 
 export const jaccard = (a: string[], b: string[]) => {
   const A = new Set(a), B = new Set(b);
@@ -37,8 +41,13 @@ export const jaccard = (a: string[], b: string[]) => {
   return uni ? inter / uni : 0;
 };
 
+<<<<<<< HEAD
 export const audioSim = (a: AudioFeatures = {} as AudioFeatures, b: AudioFeatures = {} as AudioFeatures) => {
   const keys = ['danceability', 'energy', 'valence', 'tempo'] as const;
+=======
+export const audioSim = (a: Record<string, number> = {}, b: Record<string, number> = {}) => {
+  const keys = ['danceability', 'energy', 'valence', 'tempo'];
+>>>>>>> 1624f92 (api done)
   const dist = Math.sqrt(keys.reduce((s, k) => s + Math.pow((a[k] ?? 0) - (b[k] ?? 0), 2), 0));
   const max = Math.sqrt(keys.length);
   return 1 - Math.min(1, dist / max);
@@ -55,7 +64,7 @@ export const scoreMatch = (A: UserProfile, B: UserProfile) => {
   const s = 0.55 * jaccard(sa, sb) + 
             0.25 * jaccard(ta, tb) + 
             0.15 * jaccard(ga, gb) + 
-            0.05 * audioSim(A.audio_feature_avg, B.audio_feature_avg);
+            0.05 * audioSim(A.audio_feature_avg as Record<string, number> || {}, B.audio_feature_avg as Record<string, number> || {});
   
   return Math.round(s * 100);
 };

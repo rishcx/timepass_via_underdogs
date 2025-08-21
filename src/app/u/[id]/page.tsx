@@ -3,7 +3,10 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
+import { UserProfile } from '@/types/spotify';
 
+
+<<<<<<< HEAD
 interface SpotifyArtist {
   id: string;
   name: string;
@@ -35,6 +38,8 @@ interface UserProfile {
   genres?: string[];
   audio_feature_avg?: AudioFeatures;
 }
+=======
+>>>>>>> 1624f92 (api done)
 
 interface MatchData {
   score: number;

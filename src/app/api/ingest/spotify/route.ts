@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabaseClient';
 import { spotifyApiCall } from '@/lib/spotify';
+import { SpotifyTrack, AudioFeatures } from '@/types/spotify';
 
+<<<<<<< HEAD
 interface SpotifyTrack {
   id: string;
   name: string;
@@ -21,6 +23,8 @@ interface AudioFeature {
   tempo: number;
 }
 
+=======
+>>>>>>> 1624f92 (api done)
 export async function POST(_request: NextRequest) {
   try {
     // Get the current user
@@ -43,12 +47,21 @@ export async function POST(_request: NextRequest) {
     const audioFeatures = await spotifyApiCall(userId, `/audio-features?ids=${trackIds}`);
     
     // Calculate average audio features
+<<<<<<< HEAD
     const validFeatures = audioFeatures.audio_features.filter((feature: AudioFeature | null) => feature !== null) as AudioFeature[];
     const audioFeatureAvg = validFeatures.length > 0 ? {
       danceability: validFeatures.reduce((sum: number, f: AudioFeature) => sum + f.danceability, 0) / validFeatures.length,
       energy: validFeatures.reduce((sum: number, f: AudioFeature) => sum + f.energy, 0) / validFeatures.length,
       valence: validFeatures.reduce((sum: number, f: AudioFeature) => sum + f.valence, 0) / validFeatures.length,
       tempo: validFeatures.reduce((sum: number, f: AudioFeature) => sum + f.tempo, 0) / validFeatures.length,
+=======
+    const validFeatures = audioFeatures.audio_features.filter((feature: AudioFeatures | null) => feature !== null) as AudioFeatures[];
+    const audioFeatureAvg = validFeatures.length > 0 ? {
+      danceability: validFeatures.reduce((sum: number, f: AudioFeatures) => sum + f.danceability, 0) / validFeatures.length,
+      energy: validFeatures.reduce((sum: number, f: AudioFeatures) => sum + f.energy, 0) / validFeatures.length,
+      valence: validFeatures.reduce((sum: number, f: AudioFeatures) => sum + f.valence, 0) / validFeatures.length,
+      tempo: validFeatures.reduce((sum: number, f: AudioFeatures) => sum + f.tempo, 0) / validFeatures.length,
+>>>>>>> 1624f92 (api done)
     } : null;
 
     // Extract and count genres

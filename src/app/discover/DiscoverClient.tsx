@@ -1,7 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { UserProfile } from '@/types/spotify';
 
+
+<<<<<<< HEAD
 interface SpotifyArtist {
   id: string;
   name: string;
@@ -31,10 +34,12 @@ interface UserProfile {
   audio_feature_avg?: AudioFeatures;
   score?: number;
 }
+=======
+>>>>>>> 1624f92 (api done)
 
 interface DiscoverData {
   myProfile: UserProfile;
-  matches: UserProfile[];
+  matches: (UserProfile & { score?: number })[];
 }
 
 interface DiscoverClientProps {
